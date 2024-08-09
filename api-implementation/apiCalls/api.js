@@ -9,6 +9,25 @@ export async function getRecepiListApi(){
     console.error(error);
   }
 }
+export async function geSortedtRecepiListApi(name,order){
+  try {
+    const respose = await fetch(`${BASE_URL}${GET_ALL_RECEPIES}?sortBy=${name}&order=${order}`);
+    const json = await respose.json();
+    return json.recipes;
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+export async function searchtRecepiApi(search){
+  try {
+    const respose = await fetch(`${BASE_URL}${GET_ALL_RECEPIES}/search?q=${order}`);
+    const json = await respose.json();
+    return json.recipes;
+  } catch (error) {
+    console.error(error);
+  }
+}
 
 export async function getRecepiDetailApi(id){
   try {

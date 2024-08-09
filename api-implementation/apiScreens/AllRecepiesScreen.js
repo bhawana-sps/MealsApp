@@ -35,7 +35,7 @@ function AllRecepiesScreen() {
     return (
         <View style={{ flex: 1, marginVertical: 10 }}>
           
-
+          
             <FlatList data={recipes}
                 maxToRenderPerBatch={8}
                 bounces={false}

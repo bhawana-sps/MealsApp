@@ -4,115 +4,58 @@
  *
  * @format
  */
-
 import React from 'react';
-import type {PropsWithChildren} from 'react';
-import {
-  SafeAreaView,
-  ScrollView,
-  StatusBar,
-  StyleSheet,
-  Text,
-  useColorScheme,
-  View,
-} from 'react-native';
+import { View, StyleSheet, StatusBar, SafeAreaView } from 'react-native';
 
-import {
-  Colors,
-  DebugInstructions,
-  Header,
-  LearnMoreLinks,
-  ReloadInstructions,
-} from 'react-native/Libraries/NewAppScreen';
+import { NavigationContainer } from '@react-navigation/native';
+import DrawerNav from './navigationPract/DrawerNav';
+import BottomNav from './navigationPract/BottomNav';
+import MaterialBottomNav from './navigationPract/MaterialBottomNav';
+import TopTabNav from './navigationPract/TopTabNav';
+import StackNav from './navigationPract/mealAppUsed/StackNav';
+import { Provider } from 'react-redux';
+import { store } from './store/redux_toolkit/store';
+import FavoritesContextProvider from './store/context/favorites-context';
+import { BottomNavigation } from './navigationPract/mealAppUsed/BottomNavigation';
+// import store from './store/redux/store';
 
-type SectionProps = PropsWithChildren<{
-  title: string;
-}>;
 
-function Section({children, title}: SectionProps): React.JSX.Element {
-  const isDarkMode = useColorScheme() === 'dark';
+function App() {
   return (
-    <View style={styles.sectionContainer}>
-      <Text
-        style={[
-          styles.sectionTitle,
-          {
-            color: isDarkMode ? Colors.white : Colors.black,
-          },
-        ]}>
-        {title}
-      </Text>
-      <Text
-        style={[
-          styles.sectionDescription,
-          {
-            color: isDarkMode ? Colors.light : Colors.dark,
-          },
-        ]}>
-        {children}
-      </Text>
-    </View>
-  );
-}
-
-function App(): React.JSX.Element {
-  const isDarkMode = useColorScheme() === 'dark';
-
-  const backgroundStyle = {
-    backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
-  };
-
-  return (
-    <SafeAreaView style={backgroundStyle}>
-      <StatusBar
-        barStyle={isDarkMode ? 'light-content' : 'dark-content'}
-        backgroundColor={backgroundStyle.backgroundColor}
-      />
-      <ScrollView
-        contentInsetAdjustmentBehavior="automatic"
-        style={backgroundStyle}>
-        <Header />
-        <View
-          style={{
-            backgroundColor: isDarkMode ? Colors.black : Colors.white,
-          }}>
-          <Section title="Step One">
-            Edit <Text style={styles.highlight}>App.tsx</Text> to change this
-            screen and then come back to see your edits.
-          </Section>
-          <Section title="See Your Changes">
-            <ReloadInstructions />
-          </Section>
-          <Section title="Debug">
-            <DebugInstructions />
-          </Section>
-          <Section title="Learn More">
-            Read the docs to discover what to do next:
-          </Section>
-          <LearnMoreLinks />
+    <>
+      <StatusBar barStyle="light-content" />
+      {/* translucent={true} animated={true}barStyle="light-content"showHideTransition="fade"/> */}
+      <SafeAreaView style={styles.SafeAreaViewContainer}>
+        <View style={styles.container}>
+          <FavoritesContextProvider>
+        {/* <Provider store={store}> */}
+          <NavigationContainer>
+            {/* <BottomNavigation/> */}
+           <StackNav/>
+           
+           {/* <DrawerNav/>
+          <BottomNav/> */}
+          {/* <MaterialBottomNav/> */}
+          {/* <TopTabNav/> */}
+          </NavigationContainer>
+          {/* </Provider> */}
+          </FavoritesContextProvider>
         </View>
-      </ScrollView>
-    </SafeAreaView>
-  );
+      </SafeAreaView>
+    </>
+
+  )
 }
 
 const styles = StyleSheet.create({
-  sectionContainer: {
-    marginTop: 32,
-    paddingHorizontal: 24,
+  SafeAreaViewContainer: {
+    flex: 1,
+    backgroundColor: "#24180f",
   },
-  sectionTitle: {
-    fontSize: 24,
-    fontWeight: '600',
-  },
-  sectionDescription: {
-    marginTop: 8,
-    fontSize: 18,
-    fontWeight: '400',
-  },
-  highlight: {
-    fontWeight: '700',
-  },
+  container: {
+    flex: 1,
+    // marginTop: 20,
+  }
 });
 
 export default App;

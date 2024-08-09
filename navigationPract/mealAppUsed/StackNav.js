@@ -7,11 +7,12 @@ import { CATEGORIES } from '../../data/dummy-data';
 import DrwawerNavigation from './DrwawerNavigation';
 import { BottomNavigation } from './BottomNavigation';
 import RecepiDetailScreen from '../../api-implementation/apiScreens/RecepiDetailScreen';
+import Splash from '../../screens/Splash';
 
 const stack = createNativeStackNavigator()
 function StackNav(){
 return(
-    <stack.Navigator initialRouteName='MealsCategories' screenOptions={
+    <stack.Navigator initialRouteName='Splash' screenOptions={
         {
           headerStyle:{backgroundColor:"#351401",},
           headerTintColor:"white",
@@ -21,6 +22,7 @@ return(
         }
       }>
         <stack.Screen name='DrawerNavigation' component={DrwawerNavigation} options={{headerShown:false}}/>
+        <stack.Screen name="Splash" component={Splash} options={{headerShown:false}}/>
         <stack.Screen name='MealsOverview' component={MealsOverviewScreen}  />
         <stack.Screen name='MealDetail' component={MealDetail}/>
         <stack.Screen name='RecepiDetailScreen' component={RecepiDetailScreen} options={{title:"Recepi Detail"}} />

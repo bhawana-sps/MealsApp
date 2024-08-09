@@ -1,10 +1,10 @@
 import { createDrawerNavigator } from "@react-navigation/drawer"
 import CategoriesScreen from "../../screens/CategoriesScreen"
 import Favourite from "../../screens/Favourite"
-import { Image, View } from "react-native"
+import { Alert, BackHandler, Image, View } from "react-native"
 import { BottomNavigation } from "./BottomNavigation"
 import { useFocusEffect } from "@react-navigation/native"
-import React from "react"
+import React, { useEffect } from "react"
 
 function imageContainer(image) {
     return (
@@ -16,6 +16,23 @@ function imageContainer(image) {
 const drawer = createDrawerNavigator()
 
 function DrwawerNavigation({ navigation }) {
+    const backAction = () => {
+        Alert.alert("Hold on!", "Are you sure you want to exit the app?",[
+            {
+                text: "Cancel",
+                onPress: () => null,
+                style: "cancel",
+            },
+            { text: "YES", onPress: () => BackHandler.exitApp() },
+        ])
+        return true;
+    }
+    useFocusEffect(
+         React.useCallback(()=>{
+           const backHandler=BackHandler.addEventListener("hardwareBackPress",backAction)
+           return()=> backHandler.remove()
+         },[])
+    )
     // useFocusEffect(
     //     React.useCallback(() => {
     //         const routeName = navigation.getState().routes[navigation.getState().index].name;

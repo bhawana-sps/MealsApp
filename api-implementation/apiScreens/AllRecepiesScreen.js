@@ -1,18 +1,23 @@
-import React, { useCallback, useEffect, useState } from "react"
-import { ActivityIndicator, FlatList, Image, StyleSheet, Text, TouchableOpacity, View } from "react-native"
-import { geSortedtRecepiListApi, getRecepiListApi } from "../apiCalls/api"
+import React, { useCallback, useEffect, useRef, useState } from "react"
+import { ActivityIndicator, FlatList, Image, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native"
+import { geSortedtRecepiListApi, getRecepiListApi, searchtRecepiApi } from "../apiCalls/api"
 import RecipeItemList from "./RecipeItemList"
 import { useFocusEffect, useIsFocused } from "@react-navigation/native"
+import Color from "../../util/Color"
+import ImageStyle from "../../componenets/ImageStyle"
+
 
 function AllRecepiesScreen() {
     const [recipes, setReipes] = useState([])
     const [loading, setLoading] = useState(true)
     const [error, setError] = useState(null)
     const isFocused = useIsFocused()
+    const [searchText, setSearchText] = useState("")
     const [isClicked, setIsClicked] = useState(1)
+    const debounceTimeout = useRef(null);
     const searchRecepi = async (search) => {
         try {
-            const data = await searchRecepi(search)
+            const data = await searchtRecepiApi(search)
             setReipes(data)
             console.log(data)
         } catch (error) {
@@ -68,26 +73,40 @@ function AllRecepiesScreen() {
             fetchData()
         }
     }
+
+
+    const handleSearchChange = (text) => {
+        setSearchText(text)
+        if (debounceTimeout.current) {
+            clearTimeout(debounceTimeout.current);
+        }
+        // Set a new timeout
+        debounceTimeout.current = setTimeout(() => {
+            searchRecepi(text);
+        }, 800); // Delay of 800ms
+    }
     const imageSource = () => {
-        if (isClicked == 1) return require("../../assets/sort.png")
+        if (isClicked == 1) return require("../../assets/funnel.png")
         else if (isClicked == 2) return require("../../assets/arrow_up.png")
         else return require("../../assets/arrow_down.png")
     }
-    if (loading) return <ActivityIndicator style={{ alignItems: "center" }} size="large" color="#e4baa1" />
+    if (loading) return <ActivityIndicator style={{ alignItems: "center" }} size="large" color={Color.color_e4baa1} />
 
     if (error) return <Text>{error}</Text>
 
-
     return (
-        <View style={{ flex: 1, marginVertical: 10 }}>
-            <View style={{ flexDirection: "row", marginHorizontal: 18 }}>
-                <TouchableOpacity activeOpacity={0.6} style={{
-                    height: 45, width: 45,
-                    flex: 1, alignItems: "flex-end"
-                }} onPress={onPress}>
+        <View style={style.rootContainer}>
+            <View style={style.innerViewStyle}>
+                <View style={style.searchLayoutStyle}>
+                    <ImageStyle image={require("../../assets/home_search_icon.png")}/>
+                    <TextInput style={style.inputTextStyle} maxLength={20} placeholder="Search Recepi"
+                        value={searchText}
+                        onChangeText={handleSearchChange} />
+                </View>
+
+                <TouchableOpacity activeOpacity={0.6} style={style.touchableStyle} onPress={onPress}>
                     <View style={style.circularView}>
-                        <Image style={style.imageStyle} resizeMethod="auto"
-                            source={imageSource()} />
+                    <ImageStyle image={imageSource()}/>
                     </View>
                 </TouchableOpacity>
 
@@ -110,18 +129,49 @@ function AllRecepiesScreen() {
     )
 }
 const style = StyleSheet.create({
-    imageStyle: {
-        width: 35,
-        height: 35,
-        // resizeMode: "center",
-        tintColor: "#351401",
+    rootContainer: {
+        flex: 1, marginVertical: 10
+    },
+    searchLayoutStyle: {
+        flex: 1,
         alignItems: "center",
-        justifyContent: "center",
-        margin: 2
+        borderRadius: 15,
+        backgroundColor: Color.color_ccc,
+        flexDirection: "row",
+        paddingHorizontal: 16,
+        paddingVertical: 2,
+        marginEnd: 30,
+    },
+    innerViewStyle: {
+        flexDirection: "row",
+        marginHorizontal: 18,
+        alignItems: "center",
+        justifyContent: "center"
+    },
+    touchableStyle: {
+        height: 45,
+        width: 45,
+    },
+  
+    inputTextStyle: {
+        backgroundColor: "transparent",
+        paddingHorizontal: 16,
+        paddingVertical: 5,
+        alignItems: "center",
+
+        fontSize: 15,
+
+        placeholder: "Enter text",
+        underlineColorAndroid: "transparent",
+        color:  Color.color_351401
     },
     circularView: {
-        borderRadius: 150,
-        backgroundColor: "#ccc"
+        width: 40,
+        height: 40,
+        alignItems: "center",
+        justifyContent: "center",
+        borderRadius: 50,
+        backgroundColor: Color.color_ccc
     }
 })
 export default React.memo(AllRecepiesScreen);

@@ -5,15 +5,18 @@ import { Alert, BackHandler, Image, View } from "react-native"
 import { BottomNavigation } from "./BottomNavigation"
 import { useFocusEffect } from "@react-navigation/native"
 import React, { useEffect } from "react"
+import PieChartScreen from "../../screens/PieChartScreen"
+import ImageStyle from "../../componenets/ImageStyle"
+import Color from "../../util/Color"
 
-function imageContainer(image) {
-    return (
-        <View>
-            <Image style={{ height: 28, width: 28 }} source={image} />
-        </View>
-    )
-}
-const drawer = createDrawerNavigator()
+// function imageContainer(image) {
+//     return (
+//         <View>
+//             <Image style={{ height: 28, width: 28 }} source={image} />
+//         </View>
+//     )
+// }
+const Drawer = createDrawerNavigator()
 
 function DrwawerNavigation({ navigation }) {
     const backAction = () => {
@@ -45,40 +48,45 @@ function DrwawerNavigation({ navigation }) {
     // );
     return (
 
-        <drawer.Navigator screenOptions={
+        <Drawer.Navigator screenOptions={
             {
-                headerStyle: { backgroundColor: "#351401", },
+                headerStyle: { backgroundColor: Color.color_351401, },
                 headerTintColor: "white",
                 headerTitleStyle: { fontSize: 20, fontWeight: "bold" },
                 headerTitleAlign: "center",
                 drawerContentContainerStyle: { marginTop: 50 },
-                sceneContainerStyle: { backgroundColor: "#3f2f25" },
-                drawerContentStyle: { backgroundColor: "#351401" },
+                sceneContainerStyle: { backgroundColor: Color.color_3f2f25 },
+                drawerContentStyle: { backgroundColor:  Color.color_351401 },
                 drawerInactiveTintColor: "white",
-                drawerActiveTintColor: "#351401",
-                drawerActiveBackgroundColor: '#e4baa1',
+                drawerActiveTintColor: Color.color_351401,
+                drawerActiveBackgroundColor:  Color.color_e4baa1,
             }
         }>
-             <drawer.Screen name="BottomNavigation" component={BottomNavigation} options={{
+             <Drawer.Screen name="BottomNavigation" component={BottomNavigation} options={{
                 
                 title: "Home",
-                drawerIcon: ({ color, size }) => (
-                    imageContainer(require("../../assets/category.png"))
+                drawerIcon: ({ focused }) => (
+                    <ImageStyle image={require("../../assets/category.png")} tintColor={focused ? Color.color_351401 : "white"} />
                 ),
             }} />
             
-            {/* <drawer.Screen name="Categories" component={CategoriesScreen} options={{
+            {/* <Drawer.Screen name="Categories" component={CategoriesScreen} options={{
                 title: "All Categories",
                 drawerIcon: ({ color, size }) => (
                     imageContainer(require("../../assets/category.png"))
                 ),
             }} /> */}
-            <drawer.Screen name="Favourites" component={Favourite} options={{
-                drawerIcon: ({ color, size }) => (
-                    imageContainer(require("../../assets/wishlist.png"))
+            <Drawer.Screen name="Favourites" component={Favourite} options={{
+                drawerIcon: ({ focused }) => (
+                    <ImageStyle image={require("../../assets/wishlist.png")} tintColor={focused ? Color.color_351401 : "white"}/>
                 ),
             }} />
-        </drawer.Navigator>
+            <Drawer.Screen name="PieChart" component={PieChartScreen} options={{
+                drawerIcon: ({ focused }) => (
+                    <ImageStyle image={require("../../assets/wishlist.png")} tintColor={focused ? Color.color_351401 : "white"}/>
+                ),
+            }} />
+        </Drawer.Navigator>
     )
 }
 export default DrwawerNavigation

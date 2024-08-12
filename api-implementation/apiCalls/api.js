@@ -21,7 +21,7 @@ export async function geSortedtRecepiListApi(name,order){
 
 export async function searchtRecepiApi(search){
   try {
-    const respose = await fetch(`${BASE_URL}${GET_ALL_RECEPIES}/search?q=${order}`);
+    const respose = await fetch(`${BASE_URL}${GET_ALL_RECEPIES}/search?q=${search}`);
     const json = await respose.json();
     return json.recipes;
   } catch (error) {

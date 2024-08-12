@@ -7,6 +7,7 @@ import Loader from "./Loader"
 import DashedLine from "react-native-dashed-line"
 import Subtitle from "../../componenets/Subtitle"
 import List from "../../componenets/List"
+import Color from "../../util/Color"
 
 
 function RecepiDetailScreen() {
@@ -17,7 +18,6 @@ function RecepiDetailScreen() {
     const route = useRoute()
     const navigation = useNavigation();
     const recepiId = route.params.recepiId
-    const [isImageloading, setImageLoading] = useState({})
     useEffect(() => {
 
         const fetchData = async () => {
@@ -42,7 +42,7 @@ function RecepiDetailScreen() {
             fetchData();
         }
     }, [isFocused, navigation])
-    if (isloading) return <ActivityIndicator style={{ alignItems: "center" }} size="large" color="#e4baa1" />
+    if (isloading) return <ActivityIndicator style={{ alignItems: "center" }} size="large" color={Color.color_e4baa1} />
     if (error) return <Text>{error}</Text>;
     return (
         <ScrollView>
@@ -50,41 +50,33 @@ function RecepiDetailScreen() {
 
                 <View style={style.innerContainer}>
                     <View style={{ zIndex: 1 }}>
-                        <Image resizeMethod="auto" style={style.imageStyle} src={recepiDetail.image}
-                            onLoadStart={() => setImageLoading(true)}
-                            onLoadEnd={() => setImageLoading(false)} />
-                        {isImageloading && <Loader />}
-                        <View style={[style.ratingContainerStyle, {
-                            marginStart: 12, marginBottom: -10, backgroundColor: "white", left: 0,
-                            bottom: 0, position: "absolute"
-                        }]}>
-                            <Image style={{ height: 15, width: 15 }} tintColor="#845e1b"
+                        <Image resizeMethod="auto" style={style.imageStyle} src={recepiDetail.image} />
+
+                        <View style={[style.overlayStyle,{bottom:0}]}>
+                            <Image style={{ height: 15, width: 15 }} tintColor={Color.color_845e1b}
                                 source={require("../../assets/flash_sale.png")} />
-                            <Text style={[style.ratingTextStyle, { color: "#845e1b", paddingEnd: 4 }]}>
+                            <Text style={[style.ratingTextStyle, { color: Color.color_845e1b}]}>
                                 {recepiDetail.cuisine} Dish</Text>
                         </View>
-                        <View style={[style.ratingContainerStyle, {
-                            marginStart: 12, marginTop: 15, backgroundColor: "white", left: 0,
-                            top: 0, position: "absolute"
-                        }]}>
-                            <Image style={{ height: 15, width: 15 }} tintColor="#845e1b"
+                        <View style={[style.overlayStyle, {top:0}]}>
+                            <Image style={{ height: 15, width: 15 }} tintColor={Color.color_845e1b}
                                 source={require("../../assets/flash_sale.png")} />
-                            <Text style={[style.ratingTextStyle, {
-                                color: "#845e1b", paddingEnd: 4
-                            }]}>{recepiDetail.caloriesPerServing} Cal</Text>
+                            <Text style={[style.ratingTextStyle, { color: Color.color_845e1b}]}>
+                                {recepiDetail.caloriesPerServing} Cal
+                            </Text>
                         </View>
                     </View>
-                    <View style={{ padding: 16, marginTop: 8, flexDirection: "row", alignItems: "center" }}>
+                    <View style={style.titleViewStyle}>
                         <Text style={style.headingStyle} numberOfLines={1} ellipsizeMode="tail">{recepiDetail.name.toString()} </Text>
                         <View style={style.ratingContainerStyle}>
                             <Image tintColor="white" source={require("../../assets/rating_star.png")} />
                             <Text style={style.ratingTextStyle}>{recepiDetail.rating}
-                                <Text style={{ color: "#ccc" }}> ({recepiDetail.reviewCount})</Text>
+                                <Text style={{ color: Color.color_ccc }}> ({recepiDetail.reviewCount})</Text>
                             </Text>
                         </View>
                     </View>
                 </View>
-                <DashedLine style={{ marginTop: 20, marginBottom: 15 }} dashLength={4} dashGap={4} dashThickness={1.5} dashColor="#e4baa1" />
+                <DashedLine style={{ marginTop: 20, marginBottom: 15 }} dashLength={4} dashGap={4} dashThickness={1.5} dashColor={Color.color_e4baa1} />
                 <Subtitle >Ingredients</Subtitle>
                 <List data={recepiDetail.ingredients} />
                 <Subtitle>Steps</Subtitle>
@@ -104,12 +96,18 @@ const style = StyleSheet.create({
         elevation: 5,
         shadowColor: "white",
         // height: 250,
-        backgroundColor: '#351401',
+        backgroundColor: Color.color_351401,
         shadowOpacity: 0.25,
         shadowOffset: { width: 0, height: 2 },
         shadowRadius: 8,
         overflow: Platform.OS === 'android' ? 'hidden' : 'visible',
 
+    },
+    titleViewStyle: {
+        padding: 16,
+        marginTop: 8,
+        flexDirection: "row",
+        alignItems: "center"
     },
     innerContainer: {
         borderTopStartRadius: 20,
@@ -118,7 +116,7 @@ const style = StyleSheet.create({
     imageStyle: {
         width: "100%",
         height: 180,
-        backgroundColor: "#aba9a9",
+        backgroundColor: Color.color_aba9a9,
         // aspectRatio: 135 / 76,
         resizeMode: 'contain',
         // flexWrap: 'wrap'
@@ -130,6 +128,20 @@ const style = StyleSheet.create({
         flex: 1,
         adjustsFontSizeToFit: true,
         selectable: true
+    },
+    overlayStyle: {
+        marginTop:15,
+        marginStart: 12,
+        marginBottom: -10,
+        backgroundColor: "white",
+        left: 0,
+        // bottom: 0,
+        position: "absolute",
+        borderRadius: 8,
+        alignItems: "center",
+        flexDirection: "row",
+        paddingVertical: 6,
+        paddingHorizontal: 4
     },
     ratingContainerStyle: {
         backgroundColor: "green",
@@ -144,7 +156,7 @@ const style = StyleSheet.create({
         fontSize: 13,
         fontWeight: "bold",
         color: "white",
-        marginStart: 4
+       paddingHorizontal:6
     },
 })
 export default RecepiDetailScreen

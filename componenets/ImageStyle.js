@@ -3,7 +3,7 @@ import Color from "../util/Color"
 
 function ImageStyle({image, tintColor= Color.color_351401 }){
     return(
-        <Image  style={[style.imageStyle, { tintColor }]}  resizeMethod="auto"source={image} />
+        <Image  style={[style.imageStyle, { tintColor }]}  resizeMethod="auto" source={image} />
     )
 }
 

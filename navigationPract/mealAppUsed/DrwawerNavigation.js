@@ -8,14 +8,9 @@ import React, { useEffect } from "react"
 import PieChartScreen from "../../screens/PieChartScreen"
 import ImageStyle from "../../componenets/ImageStyle"
 import Color from "../../util/Color"
+import { categoryImg, wishListImg } from "../../util/ImageConstant"
 
-// function imageContainer(image) {
-//     return (
-//         <View>
-//             <Image style={{ height: 28, width: 28 }} source={image} />
-//         </View>
-//     )
-// }
+
 const Drawer = createDrawerNavigator()
 
 function DrwawerNavigation({ navigation }) {
@@ -36,16 +31,7 @@ function DrwawerNavigation({ navigation }) {
            return()=> backHandler.remove()
          },[])
     )
-    // useFocusEffect(
-    //     React.useCallback(() => {
-    //         const routeName = navigation.getState().routes[navigation.getState().index].name;
-    //         const titles = {
-    //             Categories: 'All Categories',
-    //             AllRecipies: 'All Recepies',
-    //         };
-    //         navigation.setOptions({ title: titles[routeName] || 'Categories' });
-    //     }, [navigation])
-    // );
+
     return (
 
         <Drawer.Navigator screenOptions={
@@ -66,24 +52,18 @@ function DrwawerNavigation({ navigation }) {
                 
                 title: "Home",
                 drawerIcon: ({ focused }) => (
-                    <ImageStyle image={require("../../assets/category.png")} tintColor={focused ? Color.color_351401 : "white"} />
+                    <ImageStyle image={categoryImg} tintColor={focused ? Color.color_351401 : "white"} />
                 ),
             }} />
-            
-            {/* <Drawer.Screen name="Categories" component={CategoriesScreen} options={{
-                title: "All Categories",
-                drawerIcon: ({ color, size }) => (
-                    imageContainer(require("../../assets/category.png"))
-                ),
-            }} /> */}
+          
             <Drawer.Screen name="Favourites" component={Favourite} options={{
                 drawerIcon: ({ focused }) => (
-                    <ImageStyle image={require("../../assets/wishlist.png")} tintColor={focused ? Color.color_351401 : "white"}/>
+                    <ImageStyle image={wishListImg} tintColor={focused ? Color.color_351401 : "white"}/>
                 ),
             }} />
             <Drawer.Screen name="PieChart" component={PieChartScreen} options={{
                 drawerIcon: ({ focused }) => (
-                    <ImageStyle image={require("../../assets/wishlist.png")} tintColor={focused ? Color.color_351401 : "white"}/>
+                    <ImageStyle image={wishListImg} tintColor={focused ? Color.color_351401 : "white"}/>
                 ),
             }} />
         </Drawer.Navigator>

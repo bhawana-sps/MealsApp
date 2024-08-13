@@ -8,6 +8,7 @@ import DashedLine from "react-native-dashed-line"
 import Subtitle from "../../componenets/Subtitle"
 import List from "../../componenets/List"
 import Color from "../../util/Color"
+import { redBackground, starImage } from "../../util/ImageConstant"
 
 
 function RecepiDetailScreen() {
@@ -53,14 +54,14 @@ function RecepiDetailScreen() {
                         <Image resizeMethod="auto" style={style.imageStyle} src={recepiDetail.image} />
 
                         <View style={[style.overlayStyle,{bottom:0}]}>
-                            <Image style={{ height: 15, width: 15 }} tintColor={Color.color_845e1b}
-                                source={require("../../assets/flash_sale.png")} />
+                            <Image style={style.imageSizeStyle} tintColor={Color.color_845e1b}
+                                source={redBackground} />
                             <Text style={[style.ratingTextStyle, { color: Color.color_845e1b}]}>
                                 {recepiDetail.cuisine} Dish</Text>
                         </View>
                         <View style={[style.overlayStyle, {top:0}]}>
-                            <Image style={{ height: 15, width: 15 }} tintColor={Color.color_845e1b}
-                                source={require("../../assets/flash_sale.png")} />
+                            <Image style={style.imageSizeStyle} tintColor={Color.color_845e1b}
+                                source={redBackground} />
                             <Text style={[style.ratingTextStyle, { color: Color.color_845e1b}]}>
                                 {recepiDetail.caloriesPerServing} Cal
                             </Text>
@@ -69,14 +70,14 @@ function RecepiDetailScreen() {
                     <View style={style.titleViewStyle}>
                         <Text style={style.headingStyle} numberOfLines={1} ellipsizeMode="tail">{recepiDetail.name.toString()} </Text>
                         <View style={style.ratingContainerStyle}>
-                            <Image tintColor="white" source={require("../../assets/rating_star.png")} />
+                            <Image tintColor="white" source={starImage} />
                             <Text style={style.ratingTextStyle}>{recepiDetail.rating}
                                 <Text style={{ color: Color.color_ccc }}> ({recepiDetail.reviewCount})</Text>
                             </Text>
                         </View>
                     </View>
                 </View>
-                <DashedLine style={{ marginTop: 20, marginBottom: 15 }} dashLength={4} dashGap={4} dashThickness={1.5} dashColor={Color.color_e4baa1} />
+                <DashedLine style={style.dashlineStyle} dashLength={4} dashGap={4} dashThickness={1.5} dashColor={Color.color_e4baa1} />
                 <Subtitle >Ingredients</Subtitle>
                 <List data={recepiDetail.ingredients} />
                 <Subtitle>Steps</Subtitle>
@@ -103,6 +104,7 @@ const style = StyleSheet.create({
         overflow: Platform.OS === 'android' ? 'hidden' : 'visible',
 
     },
+    imageSizeStyle:{ height: 15, width: 15 },
     titleViewStyle: {
         padding: 16,
         marginTop: 8,
@@ -158,5 +160,6 @@ const style = StyleSheet.create({
         color: "white",
        paddingHorizontal:6
     },
+    dashlineStyle:{ marginTop: 20, marginBottom: 15 }
 })
 export default RecepiDetailScreen

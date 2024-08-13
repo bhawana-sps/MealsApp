@@ -5,6 +5,7 @@ import RecipeItemList from "./RecipeItemList"
 import { useFocusEffect, useIsFocused } from "@react-navigation/native"
 import Color from "../../util/Color"
 import ImageStyle from "../../componenets/ImageStyle"
+import { arrowDownImg, arrowUpImg, funnelImage, searchImg } from "../../util/ImageConstant"
 
 
 function AllRecepiesScreen() {
@@ -86,19 +87,17 @@ function AllRecepiesScreen() {
         }, 800); // Delay of 800ms
     }
     const imageSource = () => {
-        if (isClicked == 1) return require("../../assets/funnel.png")
-        else if (isClicked == 2) return require("../../assets/arrow_up.png")
-        else return require("../../assets/arrow_down.png")
+        if (isClicked == 1) return funnelImage
+        else if (isClicked == 2) return arrowUpImg
+        else return arrowDownImg
     }
     if (loading) return <ActivityIndicator style={{ alignItems: "center" }} size="large" color={Color.color_e4baa1} />
-
     if (error) return <Text>{error}</Text>
-
     return (
         <View style={style.rootContainer}>
             <View style={style.innerViewStyle}>
                 <View style={style.searchLayoutStyle}>
-                    <ImageStyle image={require("../../assets/home_search_icon.png")}/>
+                    <ImageStyle image={searchImg}/>
                     <TextInput style={style.inputTextStyle} maxLength={20} placeholder="Search Recepi"
                         value={searchText}
                         onChangeText={handleSearchChange} />

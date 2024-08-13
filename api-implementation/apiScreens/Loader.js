@@ -1,10 +1,11 @@
 import { ActivityIndicator, StyleSheet, View } from "react-native"
+import Color from "../../util/Color"
 
 
 function Loader() {
     return (
         <View style={style.loaderStyle}>
-            <ActivityIndicator size="large" color="#351401" />
+            <ActivityIndicator size="large" color={Color.color_351401} />
         </View>
 
     )

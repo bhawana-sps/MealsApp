@@ -2,6 +2,7 @@ import { useNavigation } from "@react-navigation/native"
 import { useEffect } from "react"
 import { ImageBackground, View } from "react-native"
 import splashImage from "../assets/splash.png";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 function Splash() {
     const navigation = useNavigation();

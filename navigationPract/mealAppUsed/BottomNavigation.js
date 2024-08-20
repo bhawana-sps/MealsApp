@@ -5,6 +5,7 @@ import StackNav from "./StackNav";
 import { Drawer } from "react-native-paper";
 import DrwawerNavigation from "./DrwawerNavigation";
 import { Image,View } from "react-native";
+import Color from "../../util/Color";
 
 function imageContainer(image) {
     return (
@@ -16,19 +17,19 @@ function imageContainer(image) {
 export function BottomNavigation({navigation}){
     const bottom = createBottomTabNavigator()
     return (
-        <bottom.Navigator sceneContainerStyle={{backgroundColor:"#3f2f25"}} screenOptions={
+        <bottom.Navigator sceneContainerStyle={{backgroundColor:Color.color_3f2f25}} screenOptions={
             {
                 tabBarIcon: () => null,
                 tabBarStyle: {
-                    backgroundColor: "#351401",
+                    backgroundColor: Color.color_351401,
                     height:45,
                     alignItems:"center",justifyContent:"center"
                   },
                   tabBarLabelPosition:"beside-icon",
                   headerShown:false,
-                  tabBarActiveTintColor:"#351401",
+                  tabBarActiveTintColor:Color.color_351401,
                   tabBarInactiveTintColor:"white",
-                  tabBarActiveBackgroundColor:"#e4baa1",
+                  tabBarActiveBackgroundColor:Color.color_e4baa1,
                   tabBarLabelStyle :{
                     fontSize:12,
                     fontWeight:"bold",alignItems: 'center',justifyContent:"center",textAlign:"center"
@@ -37,19 +38,10 @@ export function BottomNavigation({navigation}){
             }
         }
         >
-            {/* <DrwawerNavigation/> */}
-            {/* <bottom.Screen name="DrwawerNavigation" component={DrwawerNavigation}/> */}
-            <bottom.Screen name="Categories" component={CategoriesScreen} options={{
-                // title: "Categories",
-                // tabBarIcon: ({ color, size }) => (
-                //     imageContainer(require("../../assets/category_icon.png"))
-                // ),
-            }}/>
+        
+            <bottom.Screen name="Categories" component={CategoriesScreen} />
             <bottom.Screen name="AllRecipies" component={AllRecepiesScreen} options={{
-                 title: "Recepies",
-                //  tabBarIcon: ({ color, size }) => (
-                //      imageContainer(require("../../assets/recipe.png"))
-                //  ),
+                 title: "Recepies"
             }}/>
         </bottom.Navigator>
     )
